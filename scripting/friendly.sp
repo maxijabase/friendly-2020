@@ -220,7 +220,11 @@ public void OnEnableChange(ConVar convar, const char[] oldValue, const char[] ne
 		
 		for (int i = 1; i <= MaxClients; i++) {
 			
-			DisableFriendly(i);
+			if (IsClientInGame(i)) {
+				
+				DisableFriendly(i);
+				
+			}
 			
 		}
 		
@@ -232,7 +236,7 @@ public void OnTranslucidChange(ConVar convar, const char[] oldValue, const char[
 	
 	for (int i = 1; i <= MaxClients; i++) {
 		
-		if (isFriendly[i]) {
+		if (IsClientInGame(i) && isFriendly[i]) {
 			
 			SetEntityRenderMode(i, StringToInt(newValue) == 0 ? RENDER_NORMAL : RENDER_TRANSCOLOR);
 			SetEntityRenderColor(i, 255, 255, 255, StringToInt(newValue) == 0 ? 255 : 128);
@@ -247,14 +251,13 @@ public void OnCanJumpChange(ConVar convar, const char[] oldValue, const char[] n
 	
 	for (int i = 1; i <= MaxClients; i++) {
 		
-		if (isFriendly[i]) {
+		if (IsClientInGame(i) && isFriendly[i]) {
 			
 			SetEntProp(i, Prop_Data, "m_takedamage", StringToInt(newValue) == 0 ? GODMODE : BUDDHA, 1);
 			
 		}
 		
 	}
-	
 	
 }
 
@@ -288,8 +291,11 @@ public void SOAP_StopDeathMatching() {
 	
 	for (int i = 1; i <= MaxClients; i++) {
 		
-		DisableFriendly(i);
-		
+		if (IsClientInGame(i)) {
+			
+			DisableFriendly(i);
+			
+		}
 	}
 	
 }
@@ -314,7 +320,7 @@ public Action Regen(Handle timer) {
 	
 	for (int i = 1; i <= MaxClients; i++) {
 		
-		if (isFriendly[i]) {
+		if (IsClientInGame(i) && isFriendly[i]) {
 			
 			TF2_RegeneratePlayer(i);
 			
@@ -402,6 +408,8 @@ public void EnableFriendly(int client) {
 	}
 	
 }
+
+/* Stock Helpers */
 
 stock bool IsValidClient(int client) {
 	
