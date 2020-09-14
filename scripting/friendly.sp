@@ -304,6 +304,12 @@ public Action AllowCommand(Handle timer, int client) {
 
 /* Regen Function */
 
+public void CreateRegenTimer() {
+	
+	hTimer = CreateTimer(2.0, Regen, TIMER_REPEAT);
+	
+}
+
 public Action Regen(Handle timer) {
 	
 	for (int i = 1; i <= MaxClients; i++) {
