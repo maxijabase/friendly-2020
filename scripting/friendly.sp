@@ -82,6 +82,8 @@ public void OnPluginStart() {
 	cvCanJump.AddChangeHook(OnCanJumpChange);
 	cvRegen.AddChangeHook(OnRegenChange);
 	
+	/* Late Load */
+	
 	for (int i = 1; i <= MaxClients; i++) {
 		
 		if (IsClientInGame(i)) {
@@ -90,6 +92,14 @@ public void OnPluginStart() {
 			OnClientPostAdminCheck(i);
 			
 		}
+		
+	}
+	
+	int ent = -1;
+	while ((ent = FindEntityByClassname(ent, "func_respawnroom")) != INVALID_ENT_REFERENCE) {
+		
+		SDKHook(ent, SDKHook_Touch, SpawnTouch);
+		SDKHook(ent, SDKHook_EndTouch, SpawnEndTouch);
 		
 	}
 	
