@@ -437,4 +437,4 @@ stock bool IsValidClient(int client) {
 	
 	return true;
 	
-} 
+}
