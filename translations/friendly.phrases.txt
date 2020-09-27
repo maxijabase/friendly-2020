@@ -7,6 +7,7 @@
 		"en" "Not allowed."
 		"es" "No permitido."
 		"pt" "Não permitido."
+		"ru" "Не разрешено."
 		
 	}
 	
@@ -16,6 +17,7 @@
 		"en" "You must be alive to use this command."
 		"es" "Tienes que estar vivo para usar este comando."
 		"pt" "Você deve estar vivo para usar este comando."
+		"ru" "Вы должны быть живы, чтобы использовать эту команду."
 		
 	}
 	
@@ -25,6 +27,7 @@
 		"en" "You may only use this command in spawn."
 		"es" "Sólo puedes usar este comando en el spawn."
 		"pt" "Você só pode usar este comando no spawn."
+		"ru" "Вы можете использовать эту команду только при возрождении."
 		
 	}
 	
@@ -36,6 +39,7 @@
 		"en" "Wait {orange}{1} {default}seconds before using this command."
 		"es" "Espera {orange}{1} {default}segundos antes de usar este comando"
 		"pt" "Espere {orange}{1} {default}segundos antes de usar este comando"
+		"ru" "Подождите {orange}{1} {default}сек. перед использованием этой команды."
 		
 	}
 	
@@ -45,6 +49,7 @@
 		"en" "Friendly mode {limegreen}enabled{default}!"
 		"es" "¡Modo Friendly {limegreen}activado{default}!"
 		"pt" "Modo Friendly {limegreen}ativado{default}!"
+		"ru" "Дружественный режим {limegreen}включен{default}!"
 		
 	}
 	
@@ -54,6 +59,7 @@
 		"en" "Friendly mode {fullred}disabled{default}!"
 		"es" "¡Modo Friendly {fullred}desactivado{default}!"
 		"pt" "Modo Friendly {fullred}desativado{default}!"
+		"ru" "Дружественный режим {fullred}отключен{default}!"
 		
 	}
 	
@@ -65,6 +71,7 @@
 		"en" "{orange}{1} {default}is friendly! You cannot deal or receive damage from him/her. Type {orange}!friendly {default}to try it out!"
 		"es" "¡{orange}{1} {default} es friendly! No puedes inflingir ni recibir daño de él/ella. ¡Escribe {orange}!friendly {default}para probarlo!"
 		"pt" "{orange}{1} {default} é friendly! Você não pode lidar ou receber dano dele/dela. Digite {orange}!friendly {default}para tentá-lo!"
+		"ru" "{orange}{1} {default}дружелюбный(-ая)! Вы не можете нанести или получить от него/неё урон. Напишите в чат {orange}!friendly {default}, чтобы попробовать это!"
 		
 	}
 	
