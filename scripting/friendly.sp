@@ -26,7 +26,7 @@ public Plugin myinfo =
   author = "ampere", 
   description = "Make your players able to go friendly!", 
   version = PLUGIN_VERSION, 
-  url = "https://github.com/ratawar"
+  url = "https://github.com/maxijabase"
 };
 
 /* Globals */
@@ -264,6 +264,7 @@ public void SOAP_StopDeathMatching()
 public Action AllowCommand(Handle timer, int client)
 {
   cmdAllowedTimer[client] = true;
+  return Plugin_Continue;
 }
 
 /* Regen Function */
@@ -281,6 +282,7 @@ public Action Regen(Handle timer)
       TF2_RegeneratePlayer(i);
     }
   }
+  return Plugin_Continue;
 }
 
 /* Spawn Hook */
