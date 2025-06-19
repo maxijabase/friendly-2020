@@ -11,7 +11,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "1.0"
+#define PLUGIN_VERSION "1.1"
 
 #define PREFIX "{green}[Friendly]{default}"
 
@@ -19,7 +19,7 @@
 #define BUDDHA 1
 #define GODMODE 0
 
-/* Pugin Info */
+/* Plugin Info */
 public Plugin myinfo = 
 {
   name = "[TF2] Friendly", 
@@ -100,6 +100,21 @@ public void OnPluginStart()
   AutoExecConfig_ExecuteFile();
 }
 
+/* Plugin End */
+public void OnPluginEnd()
+{
+  for (int i = 1; i <= MaxClients; i++)
+  {
+    if (IsClientInGame(i))
+    {
+      SDKUnhook(i, SDKHook_OnTakeDamage, OnTakeDamage);
+      DisableFriendly(i);
+    }
+  }
+  
+  delete hTimer;
+}
+
 public void OnMapStart()
 {
   CreateRegenTimer();
@@ -120,6 +135,12 @@ public void OnClientPostAdminCheck(int client)
   isFriendly[client] = false;
   cmdAllowedTimer[client] = true;
   SDKHook(client, SDKHook_OnTakeDamage, OnTakeDamage);
+}
+
+public void OnClientDisconnect(int client)
+{
+  SDKUnhook(client, SDKHook_OnTakeDamage, OnTakeDamage);
+  DisableFriendly(client);
 }
 
 /* Command */
@@ -231,14 +252,7 @@ public void OnCanJumpChange(ConVar convar, const char[] oldValue, const char[] n
 
 public void OnRegenChange(ConVar convar, const char[] oldValue, const char[] newValue)
 {
-  if (!StringToInt(newValue))
-  {
-    delete hTimer;
-  }
-  
-  else {
-    CreateRegenTimer();
-  }
+  CreateRegenTimer();
 }
 
 /* SOAP TF2DM Support */
@@ -270,14 +284,23 @@ public Action AllowCommand(Handle timer, int client)
 /* Regen Function */
 public void CreateRegenTimer()
 {
-  hTimer = CreateTimer(2.0, Regen, TIMER_REPEAT);
+  if (hTimer != null)
+  {
+    delete hTimer;
+    hTimer = null;
+  }
+  
+  if (cvRegen.BoolValue)
+  {
+    hTimer = CreateTimer(2.0, Regen, TIMER_REPEAT);
+  }
 }
 
 public Action Regen(Handle timer)
 {
   for (int i = 1; i <= MaxClients; i++)
   {
-    if (IsClientInGame(i) && isFriendly[i])
+    if (IsClientInGame(i) && IsPlayerAlive(i) && isFriendly[i])
     {
       TF2_RegeneratePlayer(i);
     }
@@ -334,8 +357,12 @@ public void DisableFriendly(int client)
 {
   isFriendly[client] = false;
   
-  SetEntProp(client, Prop_Data, "m_takedamage", NORMAL, 1);
-  SetEntityRenderMode(client, RENDER_NORMAL);
+  if (IsValidClient(client))
+  {
+    SetEntProp(client, Prop_Data, "m_takedamage", NORMAL, 1);
+    SetEntityRenderMode(client, RENDER_NORMAL);
+    SetEntityRenderColor(client, 255, 255, 255, 255);
+  }
 }
 
 public void EnableFriendly(int client)
@@ -353,7 +380,7 @@ public void EnableFriendly(int client)
 
 /* Stock Helpers */
 
-stock bool IsValidClient(int client)
+stock bool IsValidClient(int client, bool alive = false)
 {
   if (client > 4096)
   {
@@ -365,5 +392,10 @@ stock bool IsValidClient(int client)
     return false;
   }
   
+  if (alive && !IsPlayerAlive(client))
+  {
+    return false;
+  }
+  
   return true;
-} 
+}
