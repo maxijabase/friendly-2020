@@ -163,7 +163,7 @@ public Action CMD_Friendly(int client, int args)
 /* Damage Hook Callback */
 public Action OnTakeDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype, int &weapon, float damageForce[3], float damagePosition[3], int damagecustom)
 {
-  if (victim == attacker || !attacker)
+  if (!IsValidClient(victim) || !IsValidClient(attacker) || victim == attacker)
   {
     return Plugin_Continue;
   }
